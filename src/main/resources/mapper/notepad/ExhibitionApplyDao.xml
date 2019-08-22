@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.llg.modules.notepad.dao.ExhibitionApplyDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.llg.modules.notepad.entity.ExhibitionApplyEntity" id="exhibitionApplyMap">
+        <result property="id" column="id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="companyName" column="company_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="province" column="province"/>
+        <result property="address" column="address"/>
+        <result property="userId" column="user_id"/>
+        <result property="activeId" column="active_id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+
+</mapper>

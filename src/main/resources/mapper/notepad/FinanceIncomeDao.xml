@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.llg.modules.notepad.dao.FinanceIncomeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.llg.modules.notepad.entity.FinanceIncomeEntity" id="financeIncomeMap">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="fee" column="fee"/>
+        <result property="userId" column="user_id"/>
+        <result property="itemId" column="item_id"/>
+        <result property="lng" column="lng"/>
+        <result property="lat" column="lat"/>
+        <result property="dateTime" column="date_time"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <select id="statisticFinance" resultType="com.llg.modules.notepad.entity.FinanceIncomeEntity"
+            parameterType="com.llg.modules.notepad.entity.FinanceIncomeEntity">
+        SELECT
+        fee data,
+        item_id as itemId,
+        (
+        SELECT
+        item_name
+        FROM
+        lg_item_info i
+        WHERE
+        i.id = a.item_id
+        LIMIT 1
+        ) as name
+        FROM
+        (
+        SELECT
+        SUM(fee) fee,
+        item_id
+        FROM
+        lg_finance_income
+        WHERE
+        1 = 1
+        AND user_id = #{userId}
+        <if test="startDate!=null">
+            AND date_time &gt;= #{startDate}
+        </if>
+        <if test="endDate!=null">
+            AND date_time &lt;= #{endDate}
+        </if>
+        <if test="type!=null">
+            AND type = #{type}
+        </if>
+        GROUP BY
+        item_id
+        ) a
+        ORDER BY
+        a.fee DESC
+	</select>
+
+
+</mapper>
